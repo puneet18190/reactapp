@@ -41,8 +41,11 @@ class UsersIndex extends React.Component {
     const { name } = this.props;
     return (
       <div>
-        <h1>All Users</h1>
         {name}
+        <h1>All Users</h1>
+        <Link to='/users/new'>
+          Add User
+        </Link>
         <ul>{this.renderUsers()}</ul>
       </div>
     );

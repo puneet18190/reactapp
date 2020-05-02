@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 class Api::UsersController < ApplicationController
 
@@ -8,6 +7,15 @@ class Api::UsersController < ApplicationController
 
   def show
     render json: User.find(params[:id])
+  end
+
+  def create
+    render json: User.create(user_params)
+  end
+
+  private
+  def user_params
+    params.require(:user).permit(:name, :age, :address)
   end
 
 end

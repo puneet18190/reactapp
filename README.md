@@ -22,3 +22,5 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+Ref:  [https://hibbard.eu/rails-react-crud-app/](https://hibbard.eu/rails-react-crud-app/)
+
