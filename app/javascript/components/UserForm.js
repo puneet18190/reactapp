@@ -5,7 +5,7 @@ import { isEmptyObject, validateUser, handleAjaxError } from '../helpers/helpers
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-class UserNew extends React.Component {
+class UserForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +19,7 @@ class UserNew extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.createNewUser = this.createNewUser.bind(this);
+    this.editUser = this.editUser.bind(this);
   }
 
   handleInputChange(event) {
@@ -56,13 +57,45 @@ class UserNew extends React.Component {
       .catch(handleAjaxError);
   }
 
+  editUser(){
+    const { match } = this.props;
+    const userId = match.params.id;
+    const { user } = this.state;
+
+    axios
+      .put(`/api/users/${userId}.json`, user)
+      .then(() => {
+        console.log('User updated');
+        // const { users } = this.state;
+        // const idx = users.findIndex(user => user.id === userId);
+        // users[idx] = user;
+        window.location = '/users';
+      })
+      .catch(handleAjaxError);
+  }
+
+  componentDidMount() {
+    const { match } = this.props;
+    const userId = match.params.id;
+
+    if(userId){
+      axios
+        .get(`/api/users/${userId}.json`)
+        .then(response => this.setState({ user: response.data }))
+        .catch(handleAjaxError);
+    }
+  }
+
   render() {
     const { user } = this.state;
+    const { match } = this.props;
+    const userId = match.params.id;
+
     return (
       <div>
-        <h1>New User</h1>
+        <h1>{ userId ? 'Edit User' : 'New User' }</h1>
 
-        <form className="eventForm" onSubmit={this.handleSubmit}>
+        <form className="eventForm" onSubmit={userId ? this.editUser : this.handleSubmit}>
           <div>
             <label>
               <strong>Name:</strong>
@@ -109,4 +142,4 @@ class UserNew extends React.Component {
   }
 }
 
-export default UserNew;
+export default UserForm;
