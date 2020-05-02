@@ -1,13 +1,13 @@
 /* eslint-disable camelcase */
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { handleAjaxError } from '../helpers/helpers';
 import axios from 'axios';
 import UserNotFound from './UserNotFound';
 
-class UsersShow extends React.Component {
+class UserShow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,4 +39,4 @@ class UsersShow extends React.Component {
   }
 }
 
-export default UsersShow;
+export default UserShow;

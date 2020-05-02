@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # get 'home/index'
   root 'home#index'
   get 'users', to: 'home#index'
+  get 'users/new', to: 'home#index'
   get 'users/:id', to: 'home#index'
   namespace :api do
     resources :users, only: %i[index show]
