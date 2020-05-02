@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'users/:id', to: 'home#index'
 
   namespace :api do
-    resources :users, only: %i[index show create update]
+    resources :users, only: %i[index show create update destroy]
   end
 
 end

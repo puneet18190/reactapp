@@ -12,6 +12,8 @@ class UsersIndex extends React.Component {
     this.state = {
       users: [],
     };
+
+    this.deleteUser = this.deleteUser.bind(this);
   }
 
   componentDidMount() {
@@ -19,6 +21,23 @@ class UsersIndex extends React.Component {
       .get('/api/users.json')
       .then(response => this.setState({ users: response.data }))
       .catch(handleAjaxError);
+  }
+
+  deleteUser(userId){
+    const sure = window.confirm('Are you sure?');
+    if (sure) {
+      axios
+        .delete(`/api/users/${userId}.json`)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log('User deleted successfully');
+            const { users } = this.state;
+            this.setState({ users: users.filter(user => user.id !== userId) });
+          }
+        })
+        .catch(handleAjaxError);
+    }
+    
   }
 
   renderUsers() {
@@ -33,6 +52,11 @@ class UsersIndex extends React.Component {
           {' - '}
           {user.address}
         </Link>
+        {' '}
+        <Link to={`/users/${user.id}/edit`}>Edit</Link>
+        <button className="delete" type="button" onClick={() => this.deleteUser(user.id)}>
+          Delete
+        </button>
       </li>
     ));
   }
